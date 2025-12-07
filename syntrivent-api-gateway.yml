@@ -1,0 +1,32 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: syntrivent-api-gateway
+
+  config:
+    import: optional:configserver:http://localhost:9012
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      default-filters:
+        - name: AuthorizationHeaderFilter
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9201/eureka
+  instance:
+    prefer-ip-address: true
